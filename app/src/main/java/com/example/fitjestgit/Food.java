@@ -5,9 +5,11 @@ public class Food {
     public String name;
     public Integer calories;
 
+    public Food(){}
 
     public Food(String name, Integer calories){
-
+this.name=name;
+this.calories=calories;
     }
 
     public String getName() {

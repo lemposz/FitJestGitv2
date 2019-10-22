@@ -18,7 +18,7 @@
 
 
     <EditText
-        android:id="@+id/edit_text_description"
+        android:id="@+id/edit_text_calories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ilość kalorii"
@@ -27,24 +27,30 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="saveFood"
+        android:onClick="addFood"
         android:text="Save" />
-
-    <Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Load"
-    android:onClick="loadNote"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="loadAll"
-        android:text="LoadAll" />
-    <TextView
-        android:id="@+id/text_view_data"
-        android:layout_width="wrap_content"
+        android:onClick="loadFoods"
+        android:text="Load" />
+
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
+        android:onClick="loadFoods"
+        android:text="LoadAll" />
+
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:layout_width="376dp"
+        android:layout_height="35dp"
+        android:id="@+id/spinnerFood" />
+
+    <TextView
+        android:id="@+id/textViewFood"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="Ta" />
 
 </LinearLayout>
