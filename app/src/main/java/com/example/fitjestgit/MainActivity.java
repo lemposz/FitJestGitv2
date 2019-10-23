@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     editTextCalories=findViewById(R.id.edit_text_calories);
     searchableSpinner= findViewById(R.id.spinnerFood);
     textViewFood= findViewById(R.id.textViewFood);
-    searchableSpinner.setPrompt("Znajdź jedzenie");
+    searchableSpinner.setPrompt("Znajdz jedzenie");
 
 
     }
@@ -121,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void loadFoods(View view){
+        final List<Food> foodList= new ArrayList<>();
+
         db.collection("Food")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -131,8 +135,12 @@ public class MainActivity extends AppCompatActivity {
                         Food food= documentSnapshot.toObject(Food.class);
                         String name= food.getName();
                         Integer calories= food.getCalories();
+                        Food food1= new Food(name,calories);
+                        foodList.add(food1);
                         data += "Nazwa: "+ name+ "\n Kalorie: "+ calories+ "\n\n";
                     }
+ArrayAdapter<Food>adapter= new ArrayAdapter<Food>(MainActivity.this,R.layout.support_simple_spinner_dropdown_item,foodList);
+                    searchableSpinner.setAdapter(adapter);
                     textViewFood.setText(data);
                     }
                 });

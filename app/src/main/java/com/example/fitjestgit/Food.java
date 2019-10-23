@@ -28,4 +28,9 @@ this.calories=calories;
         this.calories = calories;
     }
 
+    @Override
+    public String toString(){
+        return name + calories;
+    }
+
 }

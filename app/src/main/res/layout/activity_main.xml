@@ -43,14 +43,14 @@
         android:text="LoadAll" />
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/spinnerFood"
         android:layout_width="376dp"
-        android:layout_height="35dp"
-        android:id="@+id/spinnerFood" />
+        android:layout_height="93dp" />
 
     <TextView
         android:id="@+id/textViewFood"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="329dp"
         android:text="Ta" />
 
 </LinearLayout>
