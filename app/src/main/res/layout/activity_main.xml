@@ -32,25 +32,26 @@
 
     <Button
         android:layout_width="match_parent"
+        android:id="@+id/przycisk"
         android:layout_height="wrap_content"
-        android:onClick="loadFoods"
         android:text="Load" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="loadFoods"
         android:text="LoadAll" />
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-        android:layout_width="376dp"
-        android:layout_height="35dp"
-        android:id="@+id/spinnerFood" />
+        android:id="@+id/spinnerFood"
+        android:layout_width="336dp"
+        android:layout_height="wrap_content"
+        android:prompt="@string/spinnertitle" />
 
     <TextView
         android:id="@+id/textViewFood"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="329dp"
+        android:layout_marginTop="50dp"
         android:text="Ta" />
 
 </LinearLayout>
