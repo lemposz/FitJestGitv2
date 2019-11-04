@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Overview">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/pie_view"
+        android:background="#992727"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/imageButtonMore"
+            android:layout_width="88dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/buttonwiecej_unchecked" />
+
+        <ImageButton
+            android:id="@+id/imageButtonHistory"
+            android:layout_width="94dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_toStartOf="@+id/imageButtonMore"
+            app:srcCompat="@drawable/buttonhistoria_unchecked" />
+
+        <ImageButton
+            android:id="@+id/imageButtonRecord"
+            android:layout_width="104dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_toStartOf="@+id/imageButtonHistory"
+            app:srcCompat="@drawable/buttonrekord_unchecked" />
+
+        <ImageButton
+            android:id="@+id/imageButtonOverview"
+            android:layout_width="101dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_toStartOf="@+id/imageButtonRecord"
+            app:srcCompat="@drawable/buttonbilans_checked" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
