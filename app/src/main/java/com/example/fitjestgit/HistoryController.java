@@ -84,31 +84,99 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
 
 
                         }
+                        getAllData(totalCalories);
                         ArrayAdapter<Food>adapter= new ArrayAdapter<Food>(HistoryController.this,R.layout.support_simple_spinner_dropdown_item,foodList);
                         //Toast.makeText(HistoryController.this, totalCalories, Toast.LENGTH_SHORT).show();
                         historyListView.setAdapter(adapter);
                         if(adapter.isEmpty()){
-                            Toast.makeText(HistoryController.this, "Brak danych z tego dnia", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HistoryController.this, "Brak danych z tego dnia ", Toast.LENGTH_SHORT).show();
 
                             pieHelperArrayList.add(new PieHelper(100,Color.rgb(245,238,220)));
                             pieView.setDate(pieHelperArrayList);
                             pieView.showPercentLabel(false);
                         }
                         else {
-                            Integer totalCaloriesAte=(totalCalories*100)/1680;
-                            Integer rest= 100-totalCaloriesAte;
-                            Toast.makeText(HistoryController.this, totalCaloriesAte.toString(), Toast.LENGTH_SHORT).show();
 
-                            pieHelperArrayList.add(new PieHelper(totalCaloriesAte,Color.rgb(34,0,121)));
-                            pieHelperArrayList.add(new PieHelper(rest,Color.rgb(245,238,220)));
-                            pieView.setDate(pieHelperArrayList);
-                            pieView.showPercentLabel(false);
                         }
 
                     }
                 });
     }
 
+
+    public void getAllData(final Integer totalCalories){
+
+        db.collection("UserSettings")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                            User user= documentSnapshot.toObject(User.class);
+                            String sex= user.getSex();
+                            String type= user.getType();
+                            String ratio= user.getRatio();
+                            double weight= user.getWeight();
+                            double height= user.getHeight();
+                            int age= user.getAge();
+                            Integer calories= totalCalories;
+                            countBMR(sex,ratio,weight,height,age,type,calories);
+                        }
+
+
+
+
+                    }
+                });
+    }
+
+    public void countBMR(String sex,String ratio,double weight, double height, int age,String type,Integer totalCalories){
+        double typeofdiet=1;
+        final PieView pieView = (PieView)findViewById(R.id.pie_view);
+        final ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
+        if(type.equals("Gain")){
+            typeofdiet=1.15;
+        }
+        else if(type.equals("Keep")){
+            typeofdiet=1;
+        }
+        else if(type.equals("Burn")){
+            typeofdiet= 0.85;
+        }
+
+        if(sex.equals("Male")){
+            double bmr= Math.round(66.5+(13.7*weight)+(5*height)-(6.8*age));
+
+            String bmrString= Double.toString(bmr);
+
+            double ratioValue= Double.valueOf(ratio);
+            double typeValue= Double.valueOf(typeofdiet);
+            double caloriesNeeded= Math.round(bmr*ratioValue*typeValue);
+            String caloriesNeededString= Double.toString(caloriesNeeded);
+            String calS= caloriesNeededString.substring(0,caloriesNeededString.length()-2);
+            Integer caloriesNeededINT= Integer.parseInt(calS);
+            Toast.makeText(this, calS, Toast.LENGTH_SHORT).show();
+            Integer caloriesAtePercentage= totalCalories*100/caloriesNeededINT;
+            Integer restofCalories= 100-caloriesAtePercentage;
+            //Toast.makeText(this, caloriesAtePercentage.toString(), Toast.LENGTH_SHORT).show();
+            pieHelperArrayList.add(new PieHelper(caloriesAtePercentage,Color.rgb(34,0,121)));
+            pieHelperArrayList.add(new PieHelper(restofCalories,Color.rgb(245,238,220)));
+            
+            pieView.setDate(pieHelperArrayList);
+            pieView.showPercentLabel(true);
+            if(caloriesNeededINT<totalCalories){
+
+                Integer val= totalCalories-caloriesNeededINT;
+
+            }
+            else {
+                Integer val= caloriesNeededINT-totalCalories;
+
+            }
+        }
+
+    }
     public void toMore(View view){
         Intent intent= new Intent(this,UserSettings.class);
         startActivity(intent);
