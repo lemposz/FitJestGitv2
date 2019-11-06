@@ -41,6 +41,7 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
     private TextView textViewDate;
 
     private ImageButton imageButtonMore;
+    private ImageButton imageButtonRecord;
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
     Date currentDay= Calendar.getInstance().getTime();
     String modifiedDate= new SimpleDateFormat("yyyy-MM-dd").format(currentDay);
@@ -51,6 +52,7 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_controller);
+        imageButtonRecord= findViewById(R.id.imageButtonRecord);
         historyListView=findViewById(R.id.historyListView);
         imageButtonMore=findViewById(R.id.imageButtonMore);
         HorizontalPicker picker= (HorizontalPicker) findViewById(R.id.datePicker);
@@ -156,13 +158,13 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
             String caloriesNeededString= Double.toString(caloriesNeeded);
             String calS= caloriesNeededString.substring(0,caloriesNeededString.length()-2);
             Integer caloriesNeededINT= Integer.parseInt(calS);
-            Toast.makeText(this, calS, Toast.LENGTH_SHORT).show();
+
             Integer caloriesAtePercentage= totalCalories*100/caloriesNeededINT;
             Integer restofCalories= 100-caloriesAtePercentage;
             //Toast.makeText(this, caloriesAtePercentage.toString(), Toast.LENGTH_SHORT).show();
             pieHelperArrayList.add(new PieHelper(caloriesAtePercentage,Color.rgb(34,0,121)));
             pieHelperArrayList.add(new PieHelper(restofCalories,Color.rgb(245,238,220)));
-            
+
             pieView.setDate(pieHelperArrayList);
             pieView.showPercentLabel(true);
             if(caloriesNeededINT<totalCalories){
@@ -184,6 +186,10 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
 
     public void toOverview(View view){
         Intent intent= new Intent(this,Overview.class);
+        startActivity(intent);
+    }
+    public void toRecord(View view){
+        Intent intent= new Intent(this,RecordActivity.class);
         startActivity(intent);
     }
     @Override

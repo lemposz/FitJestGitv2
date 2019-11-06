@@ -1,38 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistoryController">
-
-    <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
-        android:id="@+id/datePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <ListView
-        android:id="@+id/historyListView"
-        android:layout_width="match_parent"
-        android:layout_height="232dp"
-        android:layout_above="@+id/pie_view"
-        android:layout_marginBottom="0dp" />
-
-    <view
-        android:id="@+id/pie_view"
-        class="im.dacer.androidcharts.PieView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp" />
+    tools:context=".RecordActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/pie_view"
-        android:layout_marginTop="-47dp"
-        android:background="#992727">
+        android:background="#992727"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <ImageButton
@@ -40,9 +21,7 @@
             android:layout_width="88dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
             android:onClick="toMore"
             app:srcCompat="@drawable/buttonwiecej_unchecked" />
 
@@ -52,7 +31,8 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="0dp"
             android:layout_toStartOf="@+id/imageButtonMore"
-            app:srcCompat="@drawable/buttonhistoria_checked" />
+            android:onClick="toHistory"
+            app:srcCompat="@drawable/buttonhistoria_unchecked" />
 
         <ImageButton
             android:id="@+id/imageButtonRecord"
@@ -60,8 +40,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="0dp"
             android:layout_toStartOf="@+id/imageButtonHistory"
-            android:onClick="toRecord"
-            app:srcCompat="@drawable/buttonrekord_unchecked" />
+            app:srcCompat="@drawable/buttonrekord_checked" />
 
         <ImageButton
             android:id="@+id/imageButtonOverview"
@@ -73,4 +52,24 @@
             app:srcCompat="@drawable/buttonbilans_unchecked" />
     </RelativeLayout>
 
-</RelativeLayout>
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/spinnerFoods"
+        android:layout_width="335dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:prompt="@string/spinnertitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Dalej"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFoods" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

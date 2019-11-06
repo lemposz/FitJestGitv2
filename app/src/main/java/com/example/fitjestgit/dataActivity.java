@@ -74,11 +74,15 @@ public class dataActivity extends AppCompatActivity {
                 Food food= new Food(name,calories);
 
                 db.collection(modifiedDate).document().set(food);
+                toOverview();
             }
         });
 
     }
 
-
+public void toOverview(){
+    Intent intent= new Intent(this,Overview.class);
+    startActivity(intent);
+}
 
 }

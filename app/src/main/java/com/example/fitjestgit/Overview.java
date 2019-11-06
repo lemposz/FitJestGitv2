@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,9 @@ public class Overview extends AppCompatActivity {
     private TextView textViewComunicate;
     private TextView textViewComunicatevalue;
     private TextView textViewCaloriesCap;
+    private ImageView imageViewRecord;
+    private ImageView imageViewHistory;
+    private ImageView imageViewMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,9 @@ public class Overview extends AppCompatActivity {
         textViewCaloriesCap= findViewById(R.id.textViewCaloriesCap);
         textViewComunicate= findViewById(R.id.textViewComunicate);
         textViewComunicatevalue= findViewById(R.id.textViewComunicatevalue);
+        imageViewRecord= findViewById(R.id.imageButtonRecord);
+        imageViewHistory= findViewById(R.id.imageButtonHistory);
+        imageViewMore= findViewById(R.id.imageButtonMore);
         final PieView pieView = (PieView)findViewById(R.id.pie_view2);
         final ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
 
@@ -119,18 +127,18 @@ public class Overview extends AppCompatActivity {
             double bmr= Math.round(66.5+(13.7*weight)+(5*height)-(6.8*age));
 
             String bmrString= Double.toString(bmr);
-
-            textViewBMR.setText(bmrString);
+            String bmrStr= bmrString.substring(0,bmrString.length()-2);
+            textViewBMR.setText(bmrStr);
 
            double ratioValue= Double.valueOf(ratio);
             double typeValue= Double.valueOf(typeofdiet);
             double caloriesNeeded= Math.round(bmr*ratioValue*typeValue);
             String caloriesNeededString= Double.toString(caloriesNeeded);
-
-            textViewCaloriesCap.setText(caloriesNeededString);
             String calS= caloriesNeededString.substring(0,caloriesNeededString.length()-2);
+            textViewCaloriesCap.setText(calS);
+
             Integer caloriesNeededINT= Integer.parseInt(calS);
-            Toast.makeText(this, calS, Toast.LENGTH_SHORT).show();
+
             Integer caloriesAtePercentage= totalCalories*100/caloriesNeededINT;
             Integer restofCalories= 100-caloriesAtePercentage;
             //Toast.makeText(this, caloriesAtePercentage, Toast.LENGTH_SHORT).show();
@@ -153,6 +161,20 @@ public class Overview extends AppCompatActivity {
     }
     public void Totalcounter(Integer totalCalories){
         textViewCaloriesAte.setText(totalCalories.toString());
+    }
+
+    public void toRecord(View view){
+        Intent intent= new Intent(this,RecordActivity.class);
+        startActivity(intent);
+    }
+    public void toHistory(View view){
+        Intent intent= new Intent(this,HistoryController.class);
+        startActivity(intent);
+    }
+
+    public void toMore(View view){
+        Intent intent= new Intent(this,UserSettings.class);
+        startActivity(intent);
     }
 }
 

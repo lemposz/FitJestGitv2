@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserSettings"></activity>
+        <activity android:name=".RecordActivity"></activity>
+        <activity android:name=".UserSettings" />
         <activity android:name=".EnterScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +21,7 @@
         <activity android:name=".Overview" />
         <activity android:name=".HistoryController" />
         <activity android:name=".dataActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

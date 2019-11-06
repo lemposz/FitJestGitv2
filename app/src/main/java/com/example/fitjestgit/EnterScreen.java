@@ -17,7 +17,7 @@ public class EnterScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent homeIntent= new Intent(EnterScreen.this, MainActivity.class);
+                Intent homeIntent= new Intent(EnterScreen.this, Overview.class);
                 startActivity(homeIntent);
                 finish();
             }
