@@ -35,6 +35,7 @@ public class Overview extends AppCompatActivity {
     private TextView textViewComunicate;
     private TextView textViewComunicatevalue;
     private TextView textViewCaloriesCap;
+    private TextView textViewCaloriesBurnt;
     private ImageView imageViewRecord;
     private ImageView imageViewHistory;
     private ImageView imageViewMore;
@@ -50,6 +51,7 @@ public class Overview extends AppCompatActivity {
         textViewComunicatevalue= findViewById(R.id.textViewComunicatevalue);
         imageViewRecord= findViewById(R.id.imageButtonRecord);
         imageViewHistory= findViewById(R.id.imageButtonHistory);
+        textViewCaloriesBurnt= findViewById(R.id.textViewCaloriesBurnt);
         imageViewMore= findViewById(R.id.imageButtonMore);
         final PieView pieView = (PieView)findViewById(R.id.pie_view2);
         final ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
@@ -61,6 +63,7 @@ public class Overview extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         Integer totalCalories=0;
+                        Integer totalBurnt=0;
                         if(queryDocumentSnapshots.isEmpty()){
                             pieHelperArrayList.add(new PieHelper(100,Color.rgb(245,238,220)));
                             pieView.setDate(pieHelperArrayList);
@@ -71,10 +74,15 @@ public class Overview extends AppCompatActivity {
                         }
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Food food= documentSnapshot.toObject(Food.class);
-                            totalCalories+= food.getCalories();
+                            if(food.getCalories()>0){
+                            totalCalories+= food.getCalories();}
+                            if(food.getCalories()<0){
+                                totalBurnt+=food.getCalories();
+                            }
                         }
+                        TotalBurnt(totalBurnt);
                         Totalcounter(totalCalories);
-                        getAllData(totalCalories);
+                        getAllData(totalCalories,totalBurnt);
 
 
 
@@ -83,7 +91,7 @@ public class Overview extends AppCompatActivity {
 
     }
 
-    public void getAllData(final Integer totalCalories){
+    public void getAllData(final Integer totalCalories, final Integer totalBurnt){
 
         db.collection("UserSettings")
                 .get()
@@ -100,7 +108,8 @@ public class Overview extends AppCompatActivity {
                             double height= user.getHeight();
                             int age= user.getAge();
                             Integer calories= totalCalories;
-                            countBMR(sex,ratio,weight,height,age,type,calories);
+                            Integer burnt= totalBurnt;
+                            countBMR(sex,ratio,weight,height,age,type,calories,burnt);
                         }
 
 
@@ -109,7 +118,7 @@ public class Overview extends AppCompatActivity {
                     }
                 });
     }
-    public void countBMR(String sex,String ratio,double weight, double height, int age,String type,Integer totalCalories){
+    public void countBMR(String sex,String ratio,double weight, double height, int age,String type,Integer totalCalories,Integer totalBurnt){
         double typeofdiet=1;
         final PieView pieView = (PieView)findViewById(R.id.pie_view2);
         final ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
@@ -139,21 +148,55 @@ public class Overview extends AppCompatActivity {
 
             Integer caloriesNeededINT= Integer.parseInt(calS);
 
-            Integer caloriesAtePercentage= totalCalories*100/caloriesNeededINT;
+            Integer caloriesAtePercentage= (totalCalories+totalBurnt)*100/caloriesNeededINT;            Integer restofCalories= 100-caloriesAtePercentage;
+            //Toast.makeText(this, caloriesAtePercentage, Toast.LENGTH_SHORT).show();
+            pieHelperArrayList.add(new PieHelper(caloriesAtePercentage,Color.rgb(34,0,121)));
+            pieHelperArrayList.add(new PieHelper(restofCalories,Color.rgb(245,238,220)));
+            pieView.setDate(pieHelperArrayList);
+            pieView.showPercentLabel(true);
+            if(caloriesNeededINT<totalCalories+totalBurnt){
+                textViewComunicate.setText("Nadmiar kalorii na dziś: ");
+                Integer val= (totalCalories+totalBurnt)-caloriesNeededINT;
+                textViewComunicatevalue.setText(val.toString());
+            }
+            else {
+                textViewComunicate.setText("Ilość kalorii do przyjęcia:");
+                Integer val= caloriesNeededINT-(totalBurnt+totalCalories);
+                textViewComunicatevalue.setText(val.toString());
+            }
+        }
+
+        if(sex.equals("Female")){
+            double bmr= Math.round(665+(9.6*weight)+(1.85*height)-(4.7*age));
+
+            String bmrString= Double.toString(bmr);
+            String bmrStr= bmrString.substring(0,bmrString.length()-2);
+            textViewBMR.setText(bmrStr);
+
+            double ratioValue= Double.valueOf(ratio);
+            double typeValue= Double.valueOf(typeofdiet);
+            double caloriesNeeded= Math.round(bmr*ratioValue*typeValue);
+            String caloriesNeededString= Double.toString(caloriesNeeded);
+            String calS= caloriesNeededString.substring(0,caloriesNeededString.length()-2);
+            textViewCaloriesCap.setText(calS);
+
+            Integer caloriesNeededINT= Integer.parseInt(calS);
+
+            Integer caloriesAtePercentage= (totalCalories+totalBurnt)*100/caloriesNeededINT;
             Integer restofCalories= 100-caloriesAtePercentage;
             //Toast.makeText(this, caloriesAtePercentage, Toast.LENGTH_SHORT).show();
             pieHelperArrayList.add(new PieHelper(caloriesAtePercentage,Color.rgb(34,0,121)));
             pieHelperArrayList.add(new PieHelper(restofCalories,Color.rgb(245,238,220)));
             pieView.setDate(pieHelperArrayList);
             pieView.showPercentLabel(true);
-            if(caloriesNeededINT<totalCalories){
+            if(caloriesNeededINT<totalCalories+totalBurnt){
                 textViewComunicate.setText("Nadmiar kalorii na dziś: ");
-                Integer val= totalCalories-caloriesNeededINT;
+                Integer val= (totalCalories+totalBurnt)-caloriesNeededINT;
                 textViewComunicatevalue.setText(val.toString());
             }
             else {
                 textViewComunicate.setText("Ilość kalorii do przyjęcia:");
-                Integer val= caloriesNeededINT-totalCalories;
+                Integer val= caloriesNeededINT-(totalBurnt+totalCalories);
                 textViewComunicatevalue.setText(val.toString());
             }
         }
@@ -162,9 +205,13 @@ public class Overview extends AppCompatActivity {
     public void Totalcounter(Integer totalCalories){
         textViewCaloriesAte.setText(totalCalories.toString());
     }
+    public void TotalBurnt( Integer totalBurnt){
+        Integer valueofBurnt= totalBurnt*-1;
+        textViewCaloriesBurnt.setText(valueofBurnt.toString());
+    }
 
     public void toRecord(View view){
-        Intent intent= new Intent(this,RecordActivity.class);
+        Intent intent= new Intent(this,ChooseRecord.class);
         startActivity(intent);
     }
     public void toHistory(View view){

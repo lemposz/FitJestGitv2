@@ -66,7 +66,7 @@ public class UserSettings extends AppCompatActivity {
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Food food= documentSnapshot.toObject(Food.class);
                             EatingPlans eatingPlans= documentSnapshot.toObject(EatingPlans.class);
-                            String ratio= eatingPlans.getRatio();
+                            String ratio= String.valueOf(1);
                             String describe= eatingPlans.getDescribe();
                             EatingPlans eatingPlans1= new EatingPlans(ratio,describe);
 
@@ -107,7 +107,8 @@ public class UserSettings extends AppCompatActivity {
         Integer age= Integer.valueOf(editTextAge.getText().toString());
 
         EatingPlans eatingPlans= eatingPlansList.get(spinnerTypes.getSelectedItemPosition());
-        String ratio= eatingPlans.getRatio();
+        //String ratio= eatingPlans.getRatio();
+        String ratio= String.valueOf(1);
         User user= new User(weight,height,sex,type,age,ratio);
         db.collection("UserSettings").document("data").set(user);
         nextSlide();

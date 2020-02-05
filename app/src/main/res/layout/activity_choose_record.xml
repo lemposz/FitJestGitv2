@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorHover"
+    tools:context=".RecordActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/pie_view"
+        android:background="#992727"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/imageButtonMore"
+            android:layout_width="88dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:onClick="toMore"
+            app:srcCompat="@drawable/buttonwiecej_unchecked" />
+
+        <ImageButton
+            android:id="@+id/imageButtonHistory"
+            android:layout_width="94dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_toStartOf="@+id/imageButtonMore"
+            android:onClick="toHistory"
+            app:srcCompat="@drawable/buttonhistoria_unchecked" />
+
+        <ImageButton
+            android:id="@+id/imageButtonRecord"
+            android:layout_width="104dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_toStartOf="@+id/imageButtonHistory"
+            app:srcCompat="@drawable/buttonrekord_checked" />
+
+        <ImageButton
+            android:id="@+id/imageButtonOverview"
+            android:layout_width="101dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_toStartOf="@+id/imageButtonRecord"
+            android:onClick="toOverview"
+            app:srcCompat="@drawable/buttonbilans_unchecked" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonAddFood"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Dodaj Jedzenie"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonAddExercise"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Dodaj Ćwiczenie"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddFood" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

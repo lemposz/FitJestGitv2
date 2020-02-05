@@ -177,6 +177,36 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
 
             }
         }
+        if(sex.equals("Female")){
+            double bmr= Math.round(665+(9.6*weight)+(1.85*height)-(4.7*age));
+
+            String bmrString= Double.toString(bmr);
+
+            double ratioValue= Double.valueOf(ratio);
+            double typeValue= Double.valueOf(typeofdiet);
+            double caloriesNeeded= Math.round(bmr*ratioValue*typeValue);
+            String caloriesNeededString= Double.toString(caloriesNeeded);
+            String calS= caloriesNeededString.substring(0,caloriesNeededString.length()-2);
+            Integer caloriesNeededINT= Integer.parseInt(calS);
+
+            Integer caloriesAtePercentage= totalCalories*100/caloriesNeededINT;
+            Integer restofCalories= 100-caloriesAtePercentage;
+            //Toast.makeText(this, caloriesAtePercentage.toString(), Toast.LENGTH_SHORT).show();
+            pieHelperArrayList.add(new PieHelper(caloriesAtePercentage,Color.rgb(34,0,121)));
+            pieHelperArrayList.add(new PieHelper(restofCalories,Color.rgb(245,238,220)));
+
+            pieView.setDate(pieHelperArrayList);
+            pieView.showPercentLabel(true);
+            if(caloriesNeededINT<totalCalories){
+
+                Integer val= totalCalories-caloriesNeededINT;
+
+            }
+            else {
+                Integer val= caloriesNeededINT-totalCalories;
+
+            }
+        }
 
     }
     public void toMore(View view){
@@ -189,7 +219,7 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
         startActivity(intent);
     }
     public void toRecord(View view){
-        Intent intent= new Intent(this,RecordActivity.class);
+        Intent intent= new Intent(this,ChooseRecord.class);
         startActivity(intent);
     }
     @Override
