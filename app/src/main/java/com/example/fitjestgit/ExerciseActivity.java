@@ -39,7 +39,8 @@ public class ExerciseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name= editTextName.getText().toString();
-                Integer calories= Math.round(Integer.parseInt(editTextCalories.getText().toString())*-1);
+                Integer calories= Math.round(Integer.parseInt(editTextCalories.getText().
+                        toString())*-1);
                 Exercise exercise= new Exercise(name,calories);
                 db.collection(modifiedDate).document().set(exercise);
                 toOverview();

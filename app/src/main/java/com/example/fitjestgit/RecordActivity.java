@@ -46,36 +46,27 @@ public class RecordActivity extends AppCompatActivity {
                     toSettings();
                 }
                 else{
-
                 }
             }
         });
         final List<Food> foodList= new ArrayList<>();
-
         db.collection("Food")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Food food= documentSnapshot.toObject(Food.class);
                             String name= food.getName();
                             Integer calories= food.getCalories();
                             Food food1= new Food(name,calories);
                             foodList.add(food1);
-
-
                         }
-                        ArrayAdapter<Food> adapter= new ArrayAdapter<Food>(RecordActivity.this,R.layout.support_simple_spinner_dropdown_item,foodList);
-
+                        ArrayAdapter<Food> adapter= new ArrayAdapter<Food>
+                                (RecordActivity.this,R.layout.support_simple_spinner_dropdown_item,foodList);
                         searchableSpinner.setAdapter(adapter);
-                        searchableSpinner.setTitle("Wybierz danie");
-
-
-                    }
+                        searchableSpinner.setTitle("Wybierz danie"); }
                 });
-
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

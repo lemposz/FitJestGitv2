@@ -134,12 +134,10 @@ public class Overview extends AppCompatActivity {
 
         if(sex.equals("Male")){
             double bmr= Math.round(66.5+(13.7*weight)+(5*height)-(6.8*age));
-
             String bmrString= Double.toString(bmr);
             String bmrStr= bmrString.substring(0,bmrString.length()-2);
             textViewBMR.setText(bmrStr);
-
-           double ratioValue= Double.valueOf(ratio);
+            double ratioValue= Double.valueOf(ratio);
             double typeValue= Double.valueOf(typeofdiet);
             double caloriesNeeded= Math.round(bmr*ratioValue*typeValue);
             String caloriesNeededString= Double.toString(caloriesNeeded);
@@ -148,7 +146,8 @@ public class Overview extends AppCompatActivity {
 
             Integer caloriesNeededINT= Integer.parseInt(calS);
 
-            Integer caloriesAtePercentage= (totalCalories+totalBurnt)*100/caloriesNeededINT;            Integer restofCalories= 100-caloriesAtePercentage;
+            Integer caloriesAtePercentage= (totalCalories+totalBurnt)*100/caloriesNeededINT;
+            Integer restofCalories= 100-caloriesAtePercentage;
             //Toast.makeText(this, caloriesAtePercentage, Toast.LENGTH_SHORT).show();
             pieHelperArrayList.add(new PieHelper(caloriesAtePercentage,Color.rgb(34,0,121)));
             pieHelperArrayList.add(new PieHelper(restofCalories,Color.rgb(245,238,220)));

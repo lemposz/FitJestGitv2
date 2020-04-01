@@ -72,12 +72,8 @@ public class dataActivity extends AppCompatActivity {
                 liczba=caloriesofMeal*0.01* Integer.parseInt(editTextGrams.getText().toString());
                 int calories= (int) Math.round(liczba);
                 Food food= new Food(name,calories);
-
                 db.collection(modifiedDate).document().set(food);
-                toOverview();
-            }
-        });
-
+                toOverview(); }});
     }
 
 public void toOverview(){

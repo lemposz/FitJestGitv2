@@ -58,8 +58,6 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
         HorizontalPicker picker= (HorizontalPicker) findViewById(R.id.datePicker);
         picker.setListener(this)
                 .init();
-
-
         picker.setBackgroundColor(Color.LTGRAY);
         picker.setDate(new DateTime());
         //readFromTheDatabase();
@@ -87,7 +85,8 @@ public class HistoryController extends AppCompatActivity implements DatePickerLi
 
                         }
                         getAllData(totalCalories);
-                        ArrayAdapter<Food>adapter= new ArrayAdapter<Food>(HistoryController.this,R.layout.support_simple_spinner_dropdown_item,foodList);
+                        ArrayAdapter<Food>adapter= new ArrayAdapter<Food>
+                                (HistoryController.this,R.layout.support_simple_spinner_dropdown_item,foodList);
                         //Toast.makeText(HistoryController.this, totalCalories, Toast.LENGTH_SHORT).show();
                         historyListView.setAdapter(adapter);
                         if(adapter.isEmpty()){
